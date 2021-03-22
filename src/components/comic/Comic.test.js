@@ -33,3 +33,11 @@ it("renders with or without a name", () => {
     });
     expect(container.textContent).toContain("Margaret");
 });
+
+it("shows the correct href", () => {
+    act(() => {
+        render(<BrowserRouter><Comic comicDetailUrl='blablabla/movie/4040-9/'/></BrowserRouter>, container);
+    });
+    const a = container.querySelector('a')
+    expect(a.href).toContain('/4040-9');
+})
