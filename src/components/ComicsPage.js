@@ -4,6 +4,8 @@ import ComicGrid from "./ComicGrid";
 import {useEffect, useState} from "react";
 
 const ComicsPage = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(false)
     const [comics, setComics] = useState([]);
     const [showList, setShowList] = useState(false);
 
@@ -11,11 +13,19 @@ const ComicsPage = () => {
         const url = `https://comicvine.gamespot.com/api/movies?api_key=603aa41c30f8420b9d4fa00584acf281ddca30ef&format=json`
 
         const fetchComics = async () => {
-            const res = await fetch(url)
-            const data = await res.json();
-            setComics(data.results);
+            try {
+                const res = await fetch(url)
+                const data = await res.json();
+                setComics(data.results);
+            } catch (e) {
+                setIsError(true);
+                console.log(e);
+            }
+
+            setIsLoading(false)
         };
 
+        setIsLoading(true);
         fetchComics();
     }, []);
 
@@ -29,11 +39,10 @@ const ComicsPage = () => {
     return (
         <>
             <Header onShowListClick={activateList} onShowGridClick={activateGrid}/>
-            {showList ?
-                <ComicsList comics={comics}/> :
-                <ComicGrid comics={comics}/>}
+            { isError && <h4>An error occurred, please try again.</h4> }
+            { isLoading && <h4>Loading...</h4> }
+            {showList ? <ComicsList comics={comics}/> : <ComicGrid comics={comics}/>}
         </>
-
     )
 }
 
