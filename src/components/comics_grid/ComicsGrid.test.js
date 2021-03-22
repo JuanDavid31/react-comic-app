@@ -1,7 +1,7 @@
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import ComicList from "./ComicList";
+import ComicsGrid from "./ComicsGrid";
 
 let container = null;
 
@@ -18,11 +18,11 @@ afterEach(() => {
     container = null;
 });
 
-it("renders with or without comics", () => {
+it("renders without comics", () => {
     act(() => {
-        render(<ComicList />, container);
+        render(<ComicsGrid />, container);
     });
-    expect(container.querySelector('ul')).not.toBe(false);
+    expect(container.querySelector('div.container')).not.toBe(false);
 });
 
 it('', function () {
@@ -36,7 +36,7 @@ it('', function () {
     act(() => {
         render(
             <BrowserRouter>
-                <ComicList comics={comics} />
+                <ComicsGrid comics={comics} />
             </BrowserRouter>,
             container
         );
