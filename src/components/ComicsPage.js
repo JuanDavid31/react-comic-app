@@ -2,12 +2,20 @@ import Header from "./Header";
 import ComicsList from "./ComiList";
 import ComicGrid from "./ComicGrid";
 import {useEffect, useState} from "react";
+import { useHistory, useLocation } from "react-router";
 
 const ComicsPage = () => {
+    let history = useHistory();
+    let query = useQuery();
+
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false)
     const [comics, setComics] = useState([]);
-    const [showList, setShowList] = useState(false);
+    const [showList, setShowList] = useState(() => {
+        const type = query.get('type');
+        if (type == null) return true;
+        return type.toLocaleLowerCase() === 'list';
+    });
 
     useEffect(() => {
         const url = `https://comicvine.gamespot.com/api/movies?api_key=603aa41c30f8420b9d4fa00584acf281ddca30ef&format=json`
@@ -30,9 +38,11 @@ const ComicsPage = () => {
     }, []);
 
     const activateList = () => {
+        history.push({ search: '?type=list' })
         setShowList(true)
     };
     const activateGrid = () => {
+        history.push({ search: '?type=grid' })
         setShowList(false)
     };
 
@@ -44,6 +54,10 @@ const ComicsPage = () => {
             {showList ? <ComicsList comics={comics}/> : <ComicGrid comics={comics}/>}
         </>
     )
+}
+
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
 }
 
 export default ComicsPage;
