@@ -1,7 +1,7 @@
 import { Switch, Route } from "react-router-dom";
 import './App.css';
 import ComicsPage from "./components/ComicsPage";
-import ComicDetailPage from "./components/ComicDetailPage";
+import ComicDetailPage from "./components/ComicDetailPage.test.js/ComicDetailPage";
 
 function App() {
   return (
