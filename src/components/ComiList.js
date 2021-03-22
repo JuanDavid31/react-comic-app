@@ -1,4 +1,4 @@
-import Comic from "./Comic";
+import Comic from "./comic/Comic";
 
 const ComicsList = ({ comics }) => {
     return (
