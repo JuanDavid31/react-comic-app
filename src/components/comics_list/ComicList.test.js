@@ -22,7 +22,7 @@ it("renders with or without comics", () => {
     act(() => {
         render(<ComicList />, container);
     });
-    expect(container.querySelector('ul')).not.toBe(false);
+    expect(container.querySelector('ul')).not.toBe(null);
 });
 
 it('', function () {

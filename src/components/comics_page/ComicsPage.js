@@ -1,6 +1,6 @@
-import Header from "./header/Header";
-import ComicsList from "./comics_list/ComicsList";
-import ComicGrid from "./comics_grid/ComicsGrid";
+import Header from "../header/Header";
+import ComicsList from "../comics_list/ComicsList";
+import ComicGrid from "../comics_grid/ComicsGrid";
 import {useEffect, useState} from "react";
 import { useHistory, useLocation } from "react-router";
 

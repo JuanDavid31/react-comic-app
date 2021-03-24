@@ -22,7 +22,7 @@ it("renders without comics", () => {
     act(() => {
         render(<ComicsGrid />, container);
     });
-    expect(container.querySelector('div.container')).not.toBe(false);
+    expect(container.querySelector('div.container')).not.toBe(null);
 });
 
 it('', function () {
