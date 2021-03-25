@@ -3,6 +3,7 @@ import ComicsList from "../comics_list/ComicsList";
 import ComicGrid from "../comics_grid/ComicsGrid";
 import {useEffect, useState} from "react";
 import { useHistory, useLocation } from "react-router";
+import RandomContext from "../../context/RandomContext";
 
 const ComicsPage = () => {
     let history = useHistory();
@@ -46,12 +47,16 @@ const ComicsPage = () => {
         setShowList(false)
     };
 
+    const [salut, setSalut] = useState('Hi');
+
     return (
         <>
-            <Header onShowListClick={activateList} onShowGridClick={activateGrid}/>
-            { isError && <h4>An error occurred, please try again.</h4> }
-            { isLoading && <h4>Loading...</h4> }
-            {showList ? <ComicsList comics={comics}/> : <ComicGrid comics={comics}/>}
+            <RandomContext.Provider value={ {value: salut, setValue: setSalut } }>
+                <Header onShowListClick={activateList} onShowGridClick={activateGrid}/>
+                {isError && <h4>An error occurred, please try again.</h4>}
+                {isLoading && <h4>Loading...</h4>}
+                {showList ? <ComicsList comics={comics}/> : <ComicGrid comics={comics}/>}
+            </RandomContext.Provider>
         </>
     )
 }
