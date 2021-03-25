@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router";
+import {ComicApi} from "../../api";
 
 const ComicDetailPage = () => {
 
@@ -11,19 +12,10 @@ const ComicDetailPage = () => {
 
     useEffect(() =>{
         const fetchComic = async () => {
-            try {
-                const url = `https://comicvine.gamespot.com/api/movie/${id}?api_key=603aa41c30f8420b9d4fa00584acf281ddca30ef&format=json`
-                const res = await fetch(url);
-                const data = await res.json();
-                setComic(data.results);
-            } catch (e) {
-                console.log(e);
-                setIsError(true);
-            }
-            setIsLoading(false)
+            const data = await ComicApi.fetchComic(id, setIsLoading, setIsError);
+            setComic(data);
         }
 
-        setIsLoading(true)
         fetchComic();
     }, [id])
 

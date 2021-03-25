@@ -3,6 +3,8 @@ import ComicsList from "../comics_list/ComicsList";
 import ComicGrid from "../comics_grid/ComicsGrid";
 import {useEffect, useState} from "react";
 import { useHistory, useLocation } from "react-router";
+import { ComicApi } from '../../api';
+
 
 const ComicsPage = () => {
     let history = useHistory();
@@ -18,22 +20,11 @@ const ComicsPage = () => {
     });
 
     useEffect(() => {
-        const url = `https://comicvine.gamespot.com/api/movies?api_key=603aa41c30f8420b9d4fa00584acf281ddca30ef&format=json`
-
         const fetchComics = async () => {
-            try {
-                const res = await fetch(url)
-                const data = await res.json();
-                setComics(data.results);
-            } catch (e) {
-                setIsError(true);
-                console.log(e);
-            }
-
-            setIsLoading(false)
+            const data = await ComicApi.fetchComics(setIsLoading, setIsError);
+            setComics(data);
         };
 
-        setIsLoading(true);
         fetchComics();
     }, []);
 
